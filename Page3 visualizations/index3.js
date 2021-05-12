@@ -24,7 +24,6 @@ function renderHeatmap(data, Genre, Song) {
     const svg = d3.create('svg')
         .attr("viewBox", [-margin.left, -margin.top, width + margin.left + margin.right, height + margin.bottom + margin.top])
         .attr('width', width).attr('height', height);
-    console.log([d3.min(data.map(d => d.Popularity)), d3.max(data.map(d => d.Popularity))])
     const color = d3.scaleLinear()
         .domain([d3.min(data.map(d => d.Popularity)), d3.max(data.map(d => d.Popularity))])
         .range(d3.schemeBlues[3]);
@@ -40,41 +39,18 @@ function renderHeatmap(data, Genre, Song) {
         .attr("height", 100)
         .style('fill', d => {
             return color(d.Popularity)
-        });
-
-    svg.append('g')
-        .selectAll('text')
-        .data(data)
-        .join('text')
-
-        .attr('transform', (d, index) => `translate(${(index % 10) * 150}, ${Math.floor(index / 10) * 100})`)
-        .attr('y', '1em')
-        .text(d => `Genre: ${d.Genre.substr(0, 8)}`)
-        .append('title')
-        .text(d => `Genre: ${d.Genre}`);
-
-    svg.append('g')
-        .selectAll('text')
-        .data(data)
-        .join('text')
-        .attr('transform', (d, index) => `translate(${(index % 10) * 150}, ${Math.floor(index / 10) * 100})`)
-        .attr('y', '2.5em')
-        .text(d => `Song: ${d['Track.Name'].substr(0, 8)}`)
-        .append('title')
-        .text(d => `Song: ${d['Track.Name']}`)
-
-    svg.append('g')
-        .selectAll('text')
-        .data(data)
-        .join('text')
-        .attr('transform', (d, index) => `translate(${(index % 10) * 150}, ${Math.floor(index / 10) * 100})`)
-        .attr('y', '4em')
-        .text(d => `Popularity: ${d.Popularity}`);
+        }).on('mouseenter', function (e) {
+            const d = d3.select(this).data()[0];
+            const [top, left] = d3.pointer(e);
+            d3.select('.tooltip').html(`Genre: ${d.Genre} <br /> Song: ${d['Track.Name']} <br /> Popularity: ${d.Popularity}`);
+        d3.select('.tooltip').style("top", `${e.y}px`).style("left", `${e.x}px`)
+        })
 
     svg.append("g")
         .attr('transform', `translate(${width / 2}, -${margin.top / 2})`)
         .append('text')
         .text(`popularity of the songs `)
+        .style('font-size', '20px')
 
     return svg.node();
 }
