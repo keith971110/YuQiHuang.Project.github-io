@@ -16,11 +16,11 @@ window.addEventListener('load', async () => {
 
 function renderHistograms(data, type, Genre) {
     const height = 900;
-    const width = 900;
-    const svg = d3.create("svg")
-        .attr("viewBox", [0, 0, width, height]);
+    const width = 1200;
+    const svg = d3.create("svg").attr('width', width).attr('height', height)
+        // .attr("viewBox", [0, 0, width, height]);
 
-    const margin = ({top: 20, right: 140, bottom: 30, left: 30});
+    const margin = ({top: 20, right: 170, bottom: 30, left: 30});
 
     const x = d3.scaleLinear()
         .domain([0, d3.max(data.map(item => item[type]))]).nice()
