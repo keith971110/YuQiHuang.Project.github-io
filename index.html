@@ -1,93 +1,19 @@
-<!DOCTYPE HTML>
-<html>
-<header>
-    <meta charset="utf-8">
-    <title>YuQi Huang's Webpage</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="./d3.v6.js"></script>
     <style>
-        html {
-            /*background-image: url(./bg.JPG);*/
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-image: linear-gradient(rgb(170, 218, 228), rgb(213, 227, 228));
-            min-height: 100vh;
-        }
-
-        body {
+        #container1 {
             width: 1200px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            text-align: center;
-            color: white;
-            font-size: 50px;
-            margin-bottom: 0;
-        }
-
-        h4 {
-            text-align: center;
-            color: #555;
-            font-style: italic;
-            font-size: 12px;
-            margin: 0;
-
-        }
-
-        h3 {
-            text-align: center;
-            color: #6f6b6b;
-            margin: 0;
-        }
-
-        h2 {
-            text-align: center;
-            color: #3d3d3d;
-            margin: 0;
-
-        }
-
-        p {
-            font-size: 22px;
-            text-indent: 2em;
-        }
-        ol {
-            padding: 0;
-        }
-        li {
-            list-style: none;
-            margin: 0;
-        }
-        li > p {
-            margin: 0;
+            height: 1200px;
         }
     </style>
-</header>
-<h1>Exploring Top Fifty Songs in 2019</h1>
-<h4>YuQi Huang</h4>
-<p>The dataset contains the most popular songs TOP 50 in 2019, which can be downloaded on the Kaggle website
-    (https:https://www.kaggle.com/leonardopena/top50spotify2019).
-    The objective of this project is to illustrate a story about the top songs in different categories. It aims to help
-    users find their favorite music in 2019.<br/><a
-            href="https://docs.google.com/document/d/1YErrd6FE7wQ9Cj5lYVUJh5_fLiyQRV6W_VoLcR0_Fkw/edit"> Revised
-        Proposal.</a></p>
+    <title>D3</title>
+</head>
+<body>
 
-<h2>Alpha Release</h2>
-<h3>Overview and Features that have been completed</h3>
-<p>At this stage, I have predicted he popularity of a song by numerical features in the dataset. Inconclusion, the best
-    predictors that used to predict popularity of a song in 2019 are Valence and Speechiness, in whichcoefficient of
-    Valence is less than 0 and coefficient of Speechiness is larger than 0. <a
-            href="./CS360%20OLS.pdf"> Graphs and
-        OLSmodels for
-        the dataset.</a></p>
-
-<p></p>
-<h2>Beta Release</h2>
-<h3> My visualizations: </h3>
-<ol>
-    <li><p>desc<a href="./Page1%20visualizations"> Page1 </a></p></li>
-    <li><p>desc<a href="./Page2%20visualizations"> Page2 </a></p></li>
-    <li><p>desc<a href="./Page3%20visualizations"> Page3 </a></p></li>
-</ol>
-
+<div id="container1"></div>
+<script src="./index.js"></script>
 </body>
 </html>
