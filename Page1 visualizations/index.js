@@ -22,7 +22,6 @@ window.addEventListener('load', () => {
                     return acc;
                 }, {})).map(item => ({ name: item[0], children: item[1].map(item1 => ({name: item1['Track.Name'], value: item1.Energy}))}))
             }
-            console.log(dendrogramData);
             document.querySelector('#container1').append(renderDendrogram(dendrogramData));
 
         })
@@ -41,7 +40,7 @@ function renderDendrogram(data) {
     const size = d3.scaleLinear()
         .domain([30, 88])
         .range([0, 20]);
-    console.log(data.children.map(d => d.name))
+
     const color = d3.scaleOrdinal()
         .domain(data.children.map(d => d.name))
         .range(d3.schemeSet1.concat(d3.schemeSet2).concat(d3.schemeSet3));
