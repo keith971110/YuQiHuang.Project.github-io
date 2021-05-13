@@ -39,11 +39,15 @@ function renderHeatmap(data, Genre, Song) {
         .attr("height", 100)
         .style('fill', d => {
             return color(d.Popularity)
-        }).on('mouseenter', function (e) {
+        })
+        .on('mousemove', function (e) {
             const d = d3.select(this).data()[0];
             const [top, left] = d3.pointer(e);
             d3.select('.tooltip').html(`Genre: ${d.Genre} <br /> Song: ${d['Track.Name']} <br /> Popularity: ${d.Popularity}`);
         d3.select('.tooltip').style("top", `${e.y}px`).style("left", `${e.x}px`)
+        })
+        .on('mouseout', function (e) {
+            d3.select('.tooltip').html(``);
         })
 
     svg.append("g")
@@ -51,6 +55,36 @@ function renderHeatmap(data, Genre, Song) {
         .append('text')
         .text(`popularity of the songs `)
         .style('font-size', '20px')
+
+    svg.append("g")
+        .attr("transform", `translate(0,${-margin.top})`)
+        .append("defs")
+        .append("linearGradient")
+        .attr("id", "linear-gradient")
+        .selectAll("stop")
+        .data(color.ticks(5).map((t, i, n) => ({ offset: `${100*i/n.length}%`, color: color(t) })))
+        .join("stop")
+        .attr("offset", d => d.offset)
+        .attr("stop-color", d => d.color);
+
+    svg.append('g')
+        .attr("transform", `translate(0,${height - 20})`)
+        .append("rect")
+        .attr('transform', `translate(${margin.left}, 0)`)
+        .attr("width", width - margin.right - margin.left)
+        .attr("height", 20)
+        .style("fill", "url(#linear-gradient)");
+
+    const axisScale = d3.scaleLinear()
+        .domain(color.domain())
+        .range([margin.left, width - margin.right]);
+
+    svg.append('g')
+        .attr("transform", `translate(0,${height})`)
+        .call(d3.axisBottom(axisScale)
+            .ticks(width / 80)
+            .tickSize(-20));
+
 
     return svg.node();
 }
