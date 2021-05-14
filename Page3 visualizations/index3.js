@@ -24,10 +24,12 @@ function renderHeatmap(data, Genre, Song) {
     const svg = d3.create('svg')
         .attr("viewBox", [-margin.left, -margin.top, width + margin.left + margin.right, height + margin.bottom + margin.top])
         .attr('width', width).attr('height', height);
+
     const color = d3.scaleLinear()
         .domain([d3.min(data.map(d => d.Popularity)), d3.max(data.map(d => d.Popularity))])
         .range(d3.schemeBlues[3]);
-
+    const x = d3.scaleBand().domain(Genre).range([margin.left, width - margin.right]);
+    const y = d3.scaleBand().domain(Song).range([margin.left, width - margin.right]);
     svg
         .append('g')
         .selectAll('rect')
@@ -41,14 +43,23 @@ function renderHeatmap(data, Genre, Song) {
             return color(d.Popularity)
         })
         .on('mousemove', function (e) {
+            console.log(e.target)
             const d = d3.select(this).data()[0];
-            const [top, left] = d3.pointer(e);
+            const [top, left] = d3.pointer(e, d3.select('#container'));
             d3.select('.tooltip').html(`Genre: ${d.Genre} <br /> Song: ${d['Track.Name']} <br /> Popularity: ${d.Popularity}`);
-        d3.select('.tooltip').style("top", `${e.y}px`).style("left", `${e.x}px`)
+        d3.select('.tooltip').style("top", `${e.y + 10}px`).style("left", `${e.x + 10}px`)
         })
         .on('mouseout', function (e) {
             d3.select('.tooltip').html(``);
         })
+
+    svg.append('g')
+        .attr('transform', `translete(${margin.left}, ${height})`)
+        .selectAll('text')
+        .data(data)
+        .join('text')
+        .text
+
 
     svg.append("g")
         .attr('transform', `translate(${width / 2}, -${margin.top / 2})`)
