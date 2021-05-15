@@ -21,9 +21,8 @@ function renderHistograms(data, type, Genre) {
         // .attr("viewBox", [0, 0, width, height]);
 
     const margin = ({top: 20, right: 250, bottom: 30, left: 30});
-
     const x = d3.scaleLinear()
-        .domain([0, d3.max(data.map(item => item[type]))]).nice()
+        .domain([0, d3.max(data.map(item => +item[type]))]).nice()
         .range([margin.left, width - margin.right])
     const y = d3.scaleBand()
         .domain(data.map(item => item['Track.Name']))
